@@ -11,4 +11,4 @@ CREATE TABLE aplanes (
 );
 
 INSERT INTO aplanes (name, model, serial_number)
-  VALUES ('Big John',  '787', 12377231);
+  VALUES ('Big John',  'Boeing 787-400', 12377231);
