@@ -25,8 +25,8 @@ function getAllAirplanes(req, res, next) {
 }
 
 function getSingleAirplane(req, res, next) {
-  var aplaneSN = parseInt(req.params.serial_number);
-    db.one('select * from aplanes where serial_number = $1', aplaneSN)
+  var aplaneID = parseInt(req.params.id);
+    db.one('select * from aplanes where id = $1', aplaneID)
     .then(function (data) {
       res.status(200)
         .json({
@@ -41,9 +41,9 @@ function getSingleAirplane(req, res, next) {
 }
 
 function createAirplane(req, res, next) {
-  //req.body.serial_number = parseInt(req.body.serial_number);
-  db.none('insert into aplanes(name, model)' +
-      'values(${name}, ${model})',
+  req.body.serial_number = parseInt(req.body.serial_number);
+  db.none('insert into aplanes(name, model, serial_number)' +
+      'values(${name}, ${model}, ${serial_number})',
     req.body)
     .then(function () {
       res.status(200)
@@ -58,9 +58,9 @@ function createAirplane(req, res, next) {
 }
 
 function updateAirplane(req, res, next) {
-    db.none('update aplanes set name=$1, model=$2 where serial_number=$3',
+    db.none('update aplanes set name=$1, model=$2, serial_number=$3 where id=$4',
     [req.body.name, req.body.model,
-       parseInt(req.body.serial_number)])
+       parseInt(req.body.serial_number), parseInt(req.params.id)])
     .then(function () {
       res.status(200)
         .json({
@@ -74,8 +74,8 @@ function updateAirplane(req, res, next) {
 }
 
 function removeAirplane(req, res, next) {
-    var aplaneSN = parseInt(req.params.serial_number);
-    db.result('delete from aplanes where serial_number = $1', aplaneSN)
+    var aplaneID = parseInt(req.params.id);
+    db.result('delete from aplanes where id = $1', aplaneID)
     .then(function (result) {
       /* jshint ignore:start */
       res.status(200)

@@ -12,6 +12,8 @@ var db = require('../queries');
  *         type: string
  *       model:
  *         type: string
+ *       serial_number:
+ *         type: integer
  */
 
 /**
@@ -33,7 +35,7 @@ router.get('/api/airplanes', db.getAllAirplanes);
 
 /**
  * @swagger
- * /api/airplanes/{serial_number}:
+ * /api/airplanes/{id}:
  *   get:
  *     tags:
  *       - Airplane
@@ -41,8 +43,8 @@ router.get('/api/airplanes', db.getAllAirplanes);
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: serial_number
- *         description: Airplanes serial number 
+ *       - name: id
+ *         description: Airplanes id 
  *         in: path
  *         required: true
  *         type: integer
@@ -52,7 +54,7 @@ router.get('/api/airplanes', db.getAllAirplanes);
  *         schema:
  *           $ref: '#/definitions/Airplane'
  */
-router.get('/api/airplanes/:serial_number', db.getSingleAirplane);
+router.get('/api/airplanes/:id', db.getSingleAirplane);
 
 /**
  * @swagger
@@ -78,7 +80,7 @@ router.post('/api/airplanes', db.createAirplane);
 
 /**
  * @swagger
- * /api/airplanes/{serial_number}:
+ * /api/airplanes/{id}:
  *   put:
  *     tags:
  *       - Airplane
@@ -86,7 +88,7 @@ router.post('/api/airplanes', db.createAirplane);
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: serial_number
+ *       - name: id
  *         description: Airplane's id
  *         in: path
  *         required: true
@@ -101,11 +103,11 @@ router.post('/api/airplanes', db.createAirplane);
  *       200:
  *         description: Successfully updated
  */
-router.put('/api/airplanes/:serial_number', db.updateAirplane);
+router.put('/api/airplanes/:id', db.updateAirplane);
 
 /**
  * @swagger
- * /api/airplanes/{serial_number}:
+ * /api/airplanes/{id}:
  *   delete:
  *     tags:
  *       - Airplane
@@ -122,7 +124,7 @@ router.put('/api/airplanes/:serial_number', db.updateAirplane);
  *       200:
  *         description: Successfully deleted
  */
-router.delete('/api/airplanes/:serial_number', db.removeAirplane);
+router.delete('/api/airplanes/:id', db.removeAirplane);
 
 
 module.exports = router;
