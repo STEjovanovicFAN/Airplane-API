@@ -6,119 +6,117 @@ var db = require('../queries');
 /**
  * @swagger
  * definitions:
- *   Puppy:
+ *   Airplane:
  *     properties:
  *       name:
  *         type: string
- *       breed:
- *         type: string
- *       age:
+ *       serial_number:
  *         type: integer
- *       sex:
+ *       model:
  *         type: string
  */
 
 /**
  * @swagger
- * /api/puppies:
+ * /api/airplanes:
  *   get:
  *     tags:
- *       - Puppies
- *     description: Returns all puppies
+ *       - Airplane
+ *     description: Returns all airplanes
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: An array of puppies
+ *         description: An array of all airplanes
  *         schema:
- *           $ref: '#/definitions/Puppy'
+ *           $ref: '#/definitions/Airplane'
  */
-router.get('/api/puppies', db.getAllPuppies);
+router.get('/api/airplanes', db.getAllAirplanes);
 
 /**
  * @swagger
- * /api/puppies/{id}:
+ * /api/airplanes/{serial_number}:
  *   get:
  *     tags:
- *       - Puppies
- *     description: Returns a single puppy
+ *       - Airplane
+ *     description: Returns a single Airplane
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
- *         description: Puppy's id
+ *       - name: serial_number
+ *         description: Airplanes serial number 
  *         in: path
  *         required: true
  *         type: integer
  *     responses:
  *       200:
- *         description: A single puppy
+ *         description: A single airplane
  *         schema:
- *           $ref: '#/definitions/Puppy'
+ *           $ref: '#/definitions/Airplane'
  */
-router.get('/api/puppies/:id', db.getSinglePuppy);
+router.get('/api/airplanes/:serial_number', db.getSingleAirplane);
 
 /**
  * @swagger
- * /api/puppies:
+ * /api/airplanes:
  *   post:
  *     tags:
- *       - Puppies
- *     description: Creates a new puppy
+ *       - Airplane
+ *     description: Creates a new airplane
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: puppy
- *         description: Puppy object
+ *       - name: airplane
+ *         description: Airplane object
  *         in: body
  *         required: true
  *         schema:
- *           $ref: '#/definitions/Puppy'
+ *           $ref: '#/definitions/Airplane'
  *     responses:
  *       200:
  *         description: Successfully created
  */
-router.post('/api/puppies', db.createPuppy);
+router.post('/api/airplanes', db.createAirplane);
 
 /**
  * @swagger
- * /api/puppies/{id}:
+ * /api/airplanes/{serial_number}:
  *   put:
  *     tags:
- *       - Puppies
- *     description: Updates a single puppy
+ *       - Airplane
+ *     description: Updates a single airplane
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
- *         description: Puppy's id
+ *       - name: serial_number
+ *         description: Airplane's id
  *         in: path
  *         required: true
  *         type: integer
- *       - name: puppy
- *         description: Puppy object
+ *       - name: airplane
+ *         description: Puppy airplane
  *         in: body
  *         required: true
  *         schema:
- *           $ref: '#/definitions/Puppy'
+ *           $ref: '#/definitions/Airplane'
  *     responses:
  *       200:
  *         description: Successfully updated
  */
-router.put('/api/puppies/:id', db.updatePuppy);
+router.put('/api/airplanes/:serial_number', db.updateAirplane);
 
 /**
  * @swagger
- * /api/puppies/{id}:
+ * /api/airplanes/{serial_number}:
  *   delete:
  *     tags:
- *       - Puppies
- *     description: Deletes a single puppy
+ *       - Airplane
+ *     description: Deletes a single Airplane
  *     produces:
  *       - application/json
  *     parameters:
  *       - name: id
- *         description: Puppy's id
+ *         description: Airplane's id
  *         in: path
  *         required: true
  *         type: integer
@@ -126,7 +124,7 @@ router.put('/api/puppies/:id', db.updatePuppy);
  *       200:
  *         description: Successfully deleted
  */
-router.delete('/api/puppies/:id', db.removePuppy);
+router.delete('/api/airplanes/:serial_number', db.removeAirplane);
 
 
 module.exports = router;

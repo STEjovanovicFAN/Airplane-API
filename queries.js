@@ -6,17 +6,17 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/puppies';
+var connectionString = 'postgres://localhost:5432/airplanes';
 var db = pgp(connectionString);
 
-function getAllPuppies(req, res, next) {
-  db.any('select * from pups')
+function getAllAirplanes(req, res, next) {
+  db.any('select * from aplanes')
     .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           data: data,
-          message: 'Retrieved ALL puppies'
+          message: 'Retrieved ALL airplanes'
         });
     })
     .catch(function (err) {
@@ -24,15 +24,15 @@ function getAllPuppies(req, res, next) {
     });
 }
 
-function getSinglePuppy(req, res, next) {
-  var pupID = parseInt(req.params.id);
-  db.one('select * from pups where id = $1', pupID)
+function getSingleAirplane(req, res, next) {
+  var aplaneSN = parseInt(req.params.serial_number);
+    db.one('select * from aplanes where serial_number = $1', aplaneSN)
     .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           data: data,
-          message: 'Retrieved ONE puppy'
+          message: 'Retrieved ONE airplane'
         });
     })
     .catch(function (err) {
@@ -40,16 +40,16 @@ function getSinglePuppy(req, res, next) {
     });
 }
 
-function createPuppy(req, res, next) {
-  req.body.age = parseInt(req.body.age);
-  db.none('insert into pups(name, breed, age, sex)' +
-      'values(${name}, ${breed}, ${age}, ${sex})',
+function createAirplane(req, res, next) {
+  req.body.serial_number = parseInt(req.body.serial_number);
+  db.none('insert into aplanes(name, serial_number, model)' +
+      'values(${name}, ${serial_number}, ${model})',
     req.body)
     .then(function () {
       res.status(200)
         .json({
           status: 'success',
-          message: 'Inserted one puppy'
+          message: 'Inserted one airplane'
         });
     })
     .catch(function (err) {
@@ -57,15 +57,15 @@ function createPuppy(req, res, next) {
     });
 }
 
-function updatePuppy(req, res, next) {
-  db.none('update pups set name=$1, breed=$2, age=$3, sex=$4 where id=$5',
-    [req.body.name, req.body.breed, parseInt(req.body.age),
-      req.body.sex, parseInt(req.params.id)])
+function updateAirplane(req, res, next) {
+    db.none('update aplanes set name=$1, serial_number=$2, model=$3',
+    [req.body.name, parseInt(req.body.serial_number),
+      req.body.model])
     .then(function () {
       res.status(200)
         .json({
           status: 'success',
-          message: 'Updated puppy'
+          message: 'Updated airplane'
         });
     })
     .catch(function (err) {
@@ -73,15 +73,15 @@ function updatePuppy(req, res, next) {
     });
 }
 
-function removePuppy(req, res, next) {
-  var pupID = parseInt(req.params.id);
-  db.result('delete from pups where id = $1', pupID)
+function removeAirplane(req, res, next) {
+    var aplaneSN = parseInt(req.params.serial_number);
+    db.result('delete from aplanes where serial_number = $1', aplaneSN)
     .then(function (result) {
       /* jshint ignore:start */
       res.status(200)
         .json({
           status: 'success',
-          message: `Removed ${result.rowCount} puppy`
+          message: `Removed ${result.rowCount} airplane`
         });
       /* jshint ignore:end */
     })
@@ -92,9 +92,9 @@ function removePuppy(req, res, next) {
 
 
 module.exports = {
-  getAllPuppies: getAllPuppies,
-  getSinglePuppy: getSinglePuppy,
-  createPuppy: createPuppy,
-  updatePuppy: updatePuppy,
-  removePuppy: removePuppy
+    getAllAirplanes: getAllAirplanes,
+    getSingleAirplane: getSingleAirplane,
+    createAirplane: createAirplane,
+    updateAirplane: updateAirplane,
+    removeAirplane: removeAirplane
 };
