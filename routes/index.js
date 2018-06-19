@@ -8,8 +8,6 @@ var db = require('../queries');
  * definitions:
  *   Airplane:
  *     properties:
- *       serial_number:
- *         type: integer
  *       name:
  *         type: string
  *       model:
