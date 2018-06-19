@@ -41,9 +41,9 @@ function getSingleAirplane(req, res, next) {
 }
 
 function createAirplane(req, res, next) {
-  req.body.serial_number = parseInt(req.body.serial_number);
-  db.none('insert into aplanes(name, serial_number, model)' +
-      'values(${name}, ${serial_number}, ${model})',
+  //req.body.serial_number = parseInt(req.body.serial_number);
+  db.none('insert into aplanes(name, model)' +
+      'values(${name}, ${model})',
     req.body)
     .then(function () {
       res.status(200)
@@ -58,9 +58,9 @@ function createAirplane(req, res, next) {
 }
 
 function updateAirplane(req, res, next) {
-    db.none('update aplanes set name=$1, serial_number=$2, model=$3',
-    [req.body.name, parseInt(req.body.serial_number),
-      req.body.model])
+    db.none('update aplanes set name=$1, model=$2 where serial_number=$3',
+    [req.body.name, req.body.model,
+       parseInt(req.body.serial_number)])
     .then(function () {
       res.status(200)
         .json({

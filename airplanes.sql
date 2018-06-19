@@ -4,10 +4,10 @@ CREATE DATABASE airplanes;
 \c airplanes;
 
 CREATE TABLE aplanes (
+  serial_number SERIAL PRIMARY KEY,
   name VARCHAR,
-  serial_number INTEGER,
   model VARCHAR
 );
 
-INSERT INTO aplanes (name, serial_number, model)
-  VALUES ('Big John', 1123412314, '787');
+INSERT INTO aplanes (name, model)
+  VALUES ('Big John',  '787');
