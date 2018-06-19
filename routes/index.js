@@ -94,7 +94,7 @@ router.post('/api/airplanes', db.createAirplane);
  *         required: true
  *         type: integer
  *       - name: airplane
- *         description: Puppy airplane
+ *         description: Airplane to change
  *         in: body
  *         required: true
  *         schema:

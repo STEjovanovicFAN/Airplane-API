@@ -58,7 +58,7 @@ function createAirplane(req, res, next) {
 }
 
 function updateAirplane(req, res, next) {
-    db.none('update aplanes set name=$1, serial_number=$2, model=$3',
+    db.none('update aplanes set name=$1, serial_number=$2, model=$3 where serial_number=$4',
     [req.body.name, parseInt(req.body.serial_number),
       req.body.model])
     .then(function () {
