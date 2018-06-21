@@ -17,7 +17,7 @@ var swaggerDefinition = {
     version: '1.0.1',
     description: 'Demonstrating how to desribe a RESTful API with Swagger',
   },
-  host: 'localhost:3000',
+  host: 'intern-ansible-test.canadacentral.cloudapp.azure.com:8080',
   basePath: '/',
 };
 
