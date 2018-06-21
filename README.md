@@ -43,7 +43,7 @@ There are two ways to configure this project depending on how you want to run yo
     };
     ```
 
-3. In the /public/api-docs/index.html file you will need to change this line to:
+3. In the **/public/api-docs/index.html** file you will need to change this line to:
     ```
     <script type="text/javascript">
       $(function () {
@@ -82,7 +82,7 @@ There are two ways to configure this project depending on how you want to run yo
     };
     ```
     
-3. In the /public/api-docs/index.html file you will need to change this line to:
+3. In the **/public/api-docs/index.html** file you will need to change this line to:
     ```
     <script type="text/javascript">
       $(function () {
