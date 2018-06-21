@@ -1,13 +1,39 @@
-# Swagger and NodeJS
+# Swagger, NodeJS, and Postgresql
 
-## Want to learn how to build this project?
+## What this project needs (for Ubuntu)
 
-Check out the [blog post](http://mherman.org/blog/2016/05/26/swagger-and-nodejs).
+This guide will assume that you are running on Ubuntu. Below will be the steps to install everything you'll need  
 
-## Want to use this project?
+Steps:
+  1. Node installed
+    ```
+    sudo apt install node
+    ```
+  2. npm installed
+    ```
+    sudo apt install npm
+    ```
+  3. postgres installed
+    ```
+    sudo apt-get install postgresql-9.5 -y
+    ```
+    
+## Configure this project
 
-1. Fork/Clone
-1. Install dependencies - `npm install`
-1. Create and seed a Postgres database - `psql -f puppies.sql`
-1. Sanity check - `npm start`
-1. Navigate to [http://localhost:3000/api/puppies](http://localhost:3000/api/puppies) and [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+There are two ways to configure this project depending on how you want to run your node js server. The code above is already configured to my preference, you will need to change it to depend on your's. There are two ways to run it: either run it locally or on a dns address. This guide will go over both of the steps.
+
+### Locally 
+1. You can set your port to whatever you wish in the **/bin/www** file on this line
+    
+    ```
+    var port = normalizePort(process.env.PORT || '**YOUR PORT HERE**');
+    ```
+    
+2. Next you will to go into **/app.js** file   
+
+
+## How to run the project
+
+1. Navigate to your cloned repo 
+    ```
+    cd /<path to the repo>/
