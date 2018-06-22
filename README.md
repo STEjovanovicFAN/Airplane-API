@@ -20,7 +20,7 @@ Steps:
     
 ## Configure this project
 
-There are two ways to configure this project depending on how you want to run your node js server. The code above is already configured to my preference, you will need to change it to depend on your's. There are two ways to run it: either run it locally or on a dns address. This guide will go over both of the steps.
+There are two ways to configure this project depending on how you want to run your node js server. The code above is already configured to my preference, you will need to change it to depending on your's. There are two ways to run it: either run it locally or on a dns/IP address. This guide will go over both of the steps.
 
 ### Locally 
 1. You can set your port to whatever you wish in the **/bin/www** file on this line
@@ -117,7 +117,7 @@ There are two ways to configure this project depending on how you want to run yo
 
 3. Since you installed postgres you should have admin access to the default user "postgres"
 
-   Do: ``` sudo -i -u postgres ``` to log into as this user and navigate back to /< path to this repo >/Airplanes-API
+   Do: ``` sudo -su postgres ``` to log into as this user
    
 4. Once back to this repo run the sql script to create a database
 
@@ -125,7 +125,7 @@ There are two ways to configure this project depending on how you want to run yo
     psql -f airplanes.sql
     ```
     
-5. Last step is to run the node server
+5. Last step is to run the node server as the postgres user 
    ```npm start ```
    
    Next navigate to your webpage.
@@ -138,8 +138,151 @@ There are two ways to configure this project depending on how you want to run yo
      - ``` < URL OR IP CONFIGURATION >:8080/swagger.json ``` to view the swagger json file and
      - ``` < URL OR IP CONFIGURATION >:8080/api-docs ``` to view the documentation for the api calls
      
-     
-   
+## Walkthrough of the code
+
+Since you now have this project up and running, this section is dedicated to providing documentation of how the code works. 
+
+The file ```/bin/www``` is the node server. This is a simple server, however it does not handle any of the swagger-ui api. Swagger-ui is handled in the ```app.js``` file. Inside the file ```/bin/www``` you can see that it has a reference to ```app.js```. 
+
+The file ```/routes/index``` is how we actually create the swagger json file used to create the api documentation and this file also provides the calls to functions that handle the api calls. 
+
+To give more of an example we will do a simple trace over the code starting in the ```/routes/index```. 
+Inside this file you will see more commented out code then actual code. This is not the case. Even though it appears to be documented out code it's actually how we create the swagger-ui json file.
+
+```
+/**
+ * @swagger
+ * definitions:
+ *   Airplane:
+ *     properties:
+ *       name:
+ *         type: string
+ *       model:
+ *         type: string
+ *       serial_number:
+ *         type: integer
+ */
+```
+
+This piece of code defines the "Airplane" object. This object has 3 properties: 
+- ```name``` which is of type string 
+- ```model``` which is also of type string 
+- ```serial_number``` which is of type int 
+
+We will reference this type of object as to avoid extra steps.
+
+Right below this code is:
+
+```
+/**
+ * @swagger
+ * /api/airplanes:
+ *   get:
+ *     tags:
+ *       - Airplane
+ *     description: Returns all airplanes
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of all airplanes
+ *         schema:
+ *           $ref: '#/definitions/Airplane'
+ */
+router.get('/api/airplanes', db.getAllAirplanes);
+
+```
+Lets break this down in two pieces:
+
+```
+/**
+ * @swagger
+ * /api/airplanes:
+ *   get:
+ *     tags:
+ *       - Airplane
+ *     description: Returns all airplanes
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of all airplanes
+ *         schema:
+ *           $ref: '#/definitions/Airplane'
+ */
+```
+
+What this code above does is it creates the visual swagger-ui get api path of ```/api/airplanes``` and documents what repsonses you will retrieve such as a 200 reponse of the json format object "Airplane".
+
+```
+router.get('/api/airplanes', db.getAllAirplanes);
+```
+
+This code is what gets executed when you do ```localhost:3000/api/airplanes``` in the url. OR when you just click the ```"Try it out!"``` button. All this does is it routes your call to the file ```queries.js``` to handle this call. In this case ```db.getAllAirplanes``` will route you to ```queries.js``` file and into the function ```getALLAirplanes```.
+
+So now moving on to the ```queries.js``` file. If you look near the top of the file you will be able to see this snippet of code:
+
+```
+function getAllAirplanes(req, res, next) {
+  db.any('select * from aplanes')
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved ALL airplanes'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+```
+
+Lets break this down. 
+
+```
+function getAllAirplanes(req, res, next) {
+```
+
+This function takes in 3 parameters. The first one is ```req```. This is the required information that the client needs to include in this api call. Since this is just a general "get all the airplanes" type of api we don't require anything from the client. If you want to see a Use for this call look in the ```removeAirplane``` and ```updateAirplane``` to see this parameter being used.
+
+The second parameter is ```res``` and this is the response type variable. Pretty self explanitory, we just take in the api call and we modify the status and send it back to the client.
+
+The third parameter ```next``` we just use for error handling.
+
+
+Next up is:
+
+```
+ db.any('select * from aplanes')
+```
+And all this is doing is its going into our database and into the table ```aplanes``` grabbing everything inside the table. We then take that data and send it back in a json with the response of 200 back to the user in this snippet of code:
+
+```
+.then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved ALL airplanes'
+        });
+```
+
+You might be wondering what:
+
+```
+    .catch(function (err) {
+      return next(err);
+    });
+```
+
+this part of the function is used for. All this is doing is its sending an error back to the user.
+
+Congratulations you should now be very familiar with the ```/air/airplanes``` api call from frontend to backend. I'll now leave the trace of the other api calls up to you as an exercise if you so choose to do.
+
+
+
     
     
    
