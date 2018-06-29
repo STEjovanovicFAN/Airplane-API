@@ -90,7 +90,14 @@ function removeAirplane(req, res, next) {
     });
 }
 
-function getCanned
+function getCanned(req, res, next) {
+    res.status(200)
+        .json({
+            status: 'success',
+            data: 'some information',
+            message: 'Given canned data'
+        });
+}
 
 
 module.exports = {
