@@ -90,11 +90,14 @@ function removeAirplane(req, res, next) {
     });
 }
 
+function getCanned
+
 
 module.exports = {
     getAllAirplanes: getAllAirplanes,
     getSingleAirplane: getSingleAirplane,
     createAirplane: createAirplane,
     updateAirplane: updateAirplane,
-    removeAirplane: removeAirplane
+    removeAirplane: removeAirplane,
+    getCanned: getCanned 
 };

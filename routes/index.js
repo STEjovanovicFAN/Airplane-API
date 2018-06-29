@@ -126,5 +126,19 @@ router.put('/api/airplanes/:id', db.updateAirplane);
  */
 router.delete('/api/airplanes/:id', db.removeAirplane);
 
+/**
+ * @swagger
+ * /test/canned:
+ *   get:
+ *     tags:
+ *       - test
+ *     description: Gets canned info 
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Successful API call
+ */
+router.get('/test/canned', db.getCanned);
 
 module.exports = router;
