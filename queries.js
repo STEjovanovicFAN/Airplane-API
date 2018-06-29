@@ -6,7 +6,7 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/airplanes';
+var connectionString = 'postgresql://postgres:SJ@localhost:5432/airplanes';
 var db = pgp(connectionString);
 
 function getAllAirplanes(req, res, next) {
